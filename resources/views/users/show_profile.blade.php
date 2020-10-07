@@ -12,25 +12,25 @@
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img  class="img-circle img-bordered" width="200" height="200" src="{{ asset('imgprofile/').'/'.Auth::user()->imagen }}" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="{{ asset('imgprofile/').'/'.Auth::user()->imagen }}" alt="User profile picture">
                                 </div>
 
                                 <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
 
-                                <p class="text-muted text-center">Software Engineer</p>
+                                <p class="text-muted text-center">{{$rol}}</p>
 
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b>Fecha de Nacimiento: </b> <a class="float-right">{{$user_date->fecha_nacimiento}}</a>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i> <b>Fecha de Nacimiento: </b> <a class="float-right">{{$user_date->fecha_nacimiento}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Sexo: </b> <a class="float-right">{{$user_date->sexo}}</a>
+                                        <i class="fa fa-transgender" aria-hidden="true"></i> <b>Sexo: </b> <a class="float-right">{{$user_date->sexo}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Lugar de Nacimiento: </b> <a class="float-right">{{$user_date->lugar_nacimiento}}</a>
+                                        <i class="fa fa-map-pin" aria-hidden="true"></i>  <b>Lugar de Nacimiento: </b> <a class="float-right">{{$user_date->lugar_nacimiento}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Localidad: </b> <a class="float-right">{{$user_date->estado}}, {{$user_date->ciudad}}</a>
+                                        <i class="fa fa-map-marker-alt mr-1"></i> <b>Localidad: </b> <a class="float-right">{{$user_date->estado}}, {{$user_date->ciudad}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -43,37 +43,37 @@
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Otros Datos</h3>
-
-                                <div class="col-sm-3 float-left"> <a href="{{route('users.edit', $user->id )}} "><button type="button" class="btn btn-block btn-warning btn-sm">Editar</button></a></div>
-
+                                @can('Administrador')
+                                    <div class="col-sm-3 float-left"> <a href="{{route('admin.edit', $user->id )}} "><button type="button" class="btn btn-block btn-warning btn-sm">Editar</button></a></div>
+                                @endcan
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <strong><i class="fas fa-book mr-1"></i> Estado Civil:</strong>
+                                <strong><i class="fa fa-book mr-1"></i> Estado Civil:</strong>
                                 <p class="text-muted">
                                     {{$user_date->estado_civil}}
                                 </p>
 
                                 <hr>
 
-                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Dirección:</strong>
+                                <strong> <i class="fa fa-map" aria-hidden="true"></i> Dirección:</strong>
                                 <p class="text-muted">{{$user_date->direccion}}</p>
 
                                 <hr>
 
-                                <strong><i class="fas fa-pencil-alt mr-1"></i> Nacionalidad: </strong>
+                                <strong> <i class="fa fa-passport" aria-hidden="true"></i> Nacionalidad: </strong>
                                 <p class="text-muted">
                                     {{$user_date->nacionalidad}}
                                 </p>
 
                                 <hr>
 
-                                <strong><i class="far fa-file-alt mr-1"></i> Cedula:</strong>
+                                <strong> <i class="fa fa-id-card-o" aria-hidden="true"></i> Cedula:</strong>
                                 <p class="text-muted">{{$user_date->cedula}}</p>
 
                                 <hr>
 
-                                <strong><i class="far fa-file-alt mr-1"></i> Telefono: </strong>
+                                <strong> <i class="fa fa-mobile" aria-hidden="true"></i> Telefono: </strong>
 
                                 <p class="text-muted">
                                     {{$user_date->telefono}}
