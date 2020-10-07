@@ -10,34 +10,54 @@
 
     <title> @yield('title'){{ config('app.name') }} </title>
 
-    <!-- Scripts -->
+    <!-- Scripts offline-->
+
     <script src="{{asset('dist/js/adminlte.min.js')}}" defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{asset('dist/js/bootstrap.min.js')}}" defer></script>
+    <script src="{{asset('dist/js/jquery.min.js')}}"></script> 
+    <script src="{{asset('dist/js/popper.min.js')}}"></script>
+    <script  src="{{asset('dist/js/jquery.dataTables.min.js')}}" defer></script>
+    <script  src="{{asset('dist/js/dataTables.responsive.min.js')}}" defer></script>
+    <script src="{{asset('dist/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('dist/js/reponsive.bootstrap.min.js')}}"> </script>
+
+    @stack('scripts')
+
+    <!-- Scripts online -->
+    
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script  src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" defer></script>
     <script  src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js" defer></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
-
-    @stack('scripts')
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script> 
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap.min.js"> </script>
+-->
 
 <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
 
-    <!-- Fonts -->
+    <!-- Fonts Online-->
+    <link href="{{asset('dist/css/font.min.css')}}"
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
 
     <!-- Styles -->
 
 
     <link href="{{ asset('dist/css/adminlte.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{asset('dist/img/favicon/favicon.png')}}" />
+    <link rel="stylesheet" href="{{asset('dist/css/jquery.dataTables.min.css')}}" >
+    <link rel="stylesheet" href="{{asset('dist/css/responsive.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/buttons.dataTables.min.css')}}">
+
+
+    <!-- Styles Online
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/responsive.dataTables.min.css">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap.min.js">
     <link href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{asset('dist/img/favicon/favicon.png')}}" />
+    -->
 
 
 </head>
