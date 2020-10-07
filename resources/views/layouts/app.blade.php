@@ -35,8 +35,8 @@
 -->
 
 <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
-
+    <!--<link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">-->
+    <script src="https://kit.fontawesome.com/ada267d788.js" crossorigin="anonymous"></script>
     <!-- Fonts Online-->
     <link href="{{asset('dist/css/font.min.css')}}"
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -69,7 +69,7 @@
         <nav class="main-header navbar navbar-expand-md navbar-light " style="background: linear-gradient(135deg, rgba(73,155,234,1) 0%, rgba(73,155,234,1) 13%, rgba(25,105,179,1) 37%, rgba(224,20,20,1) 100%);">
 
                 <a class="navbar-toggler order-1 " type="button" data-toggle="collapse" @auth() data-widget="pushmenu" @endauth data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+                    <i class="fa fa-bars"></i>
                 </a>
                 <a href="{{ url('/') }}" class="navbar-brand">
                     <img src="{{ asset('dist/img/logo1.png') }}" alt=" Logo" class="brand-image img-circle elevation-3"
@@ -113,7 +113,7 @@
                                 <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
+                                        <i class="fa fa-search"></i>
                                     </button>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@
                         <li class="nav-item">
                             <a @can('Administrador') href="{{ route('admin.dashboard') }}" @endcan
                             @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro') href="{{ route('users.index') }}" @endcan class="    nav-link">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fa fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
@@ -189,7 +189,7 @@
                             <li class="nav-item">
                                 <a href="{{route('admin.show_users')}}"
                                    class="nav-link nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
+                                    <i class="nav-icon fa fa-users"></i>
                                     <p>
                                         Usuarios
                                         <?php $users_count= DB::table('users')->count(); ?>
@@ -200,7 +200,7 @@
                             <li class="nav-item">
                                 <a href="{{route('roles.index')}}"
                                    class="nav-link nav-link">
-                                    <i class="nav-icon fas fa-user-tag"></i>
+                                    <i class="nav-icon fa fa-user-tag"></i>
                                     <p>
                                         Roles de Usuarios
                                     </p>
@@ -209,7 +209,7 @@
                             <li class="nav-item">
                                 <a href="{{route('iglesias.index')}}"
                                    class="nav-link nav-link">
-                                    <i class="nav-icon fas fa-church"></i>
+                                    <i class="nav-icon fa fa-church"></i>
                                     <p>
                                         Iglesias
                                         <?php $iglesias_count= DB::table('iglesias')->count(); ?>

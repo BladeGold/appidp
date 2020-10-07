@@ -5,6 +5,7 @@ use App\Http\Requests\AdminUserUpdateFormRequest;
 use App\User;
 use App\Iglesia;
 use App\UserDate;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -26,8 +27,9 @@ class AdminController extends Controller
     }
 
     public function index(Request $request)
-    {   $user = User::all();
+    {   
         $ig= DB::table('iglesia_user')->count();
+        
         
         return view('admin.index', [
             'users_count' => User::all()->count(),
@@ -65,8 +67,12 @@ class AdminController extends Controller
      */
     public function show($id)
     {  $valida = $this->validates($id);
+        $user_date=UserDate::Where('user_id', $id)->firstOrFail();
+        $user=User::findOrFail($id);
+        $rol= User::find($id)->roles->flatten()->pluck('name')->last();
+
         if ($valida==true){
-            return view('admin.show_profile', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            return view('admin.show_profile', compact('user_date','user','rol'));
         }
         elseif ($valida==false) {
            return redirect('admin/show_users')->with('mensaje','El usuario no posee datos registrados')->with('tipo','warning');
@@ -86,7 +92,12 @@ class AdminController extends Controller
             return redirect('admin/show_users')->with('mensaje','El usuario no posee datos registrados')->with('tipo','warning');
         }
         else{
-            return view('admin.edit_admin', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            
+            $roles=Role::all()->flatten()->pluck('name','id');
+            $rol= User::find($id)->roles->flatten()->pluck('name')->last();
+            $user_date= UserDate::Where('user_id', $id)->firstOrFail();
+            $user= User::findOrFail($id);
+            return view('admin.edit_admin', compact('user','user_date','roles','rol',));
         }
     }
 
@@ -106,7 +117,7 @@ class AdminController extends Controller
         $user->last_name=$request->get('last_name');
         $user->email=$request->get('email');
 
-        $date->user_id= Auth::id();
+
         $date->fecha_nacimiento=$request->get('fecha_nacimiento');
         $date->lugar_nacimiento=$request->get('lugar_nacimiento');
         $date->telefono=$request->get('telefono');
@@ -129,6 +140,10 @@ class AdminController extends Controller
                 ->save($ruta,72);
             $user->imagen=$filename;
         }
+
+        $role_id= User::find($id)->roles->flatten()->pluck('id')->last();
+        User::find($id)->roles()->updateExistingPivot($role_id, ['role_id' => $request->get('rol')]);
+        //dd(User::find($id)->roles->flatten()->pluck('id')->last());
         $date->update();
         $user->update();
         return redirect('/admin/show_users');

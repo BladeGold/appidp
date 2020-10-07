@@ -148,8 +148,11 @@ class UserController extends Controller
 
     public function show($id)
     { $valida = $this->validates();
+        $user_date=UserDate::Where('user_id', $id)->firstOrFail();
+        $user=User::findOrFail($id);
+        $rol= User::find($id)->roles->flatten()->pluck('name')->last();
         if ($valida==true){
-            return view('users.show_profile', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            return view('users.show_profile', compact('user_date','user','rol',));
         }
         else {
             return redirect('/users');
@@ -180,7 +183,7 @@ class UserController extends Controller
         $user->name=$request->get('name');
         $user->last_name=$request->get('last_name');
 
-        $date->user_id= Auth::id();
+        
         $date->fecha_nacimiento=$request->get('fecha_nacimiento');
         $date->lugar_nacimiento=$request->get('lugar_nacimiento');
         $date->telefono=$request->get('telefono');
