@@ -218,7 +218,6 @@
                                 <p>
                                     Mi Iglesia
                                     
-                                   
                                 </p>
                             </a>
                         </li>

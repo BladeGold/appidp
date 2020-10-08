@@ -1,6 +1,4 @@
-@extends('layouts.app')
-@section('title') Inicio -@endsection
-
+@extends('layouts.app')      
 @section('content')
 <div class="container">
     <section class="content">
@@ -11,7 +9,7 @@
 
             @if($esMiembro == false)
                 <div class=" alert alert-info">
-                     <span> @include('users.modal_button_asignar') </span>
+                     <span> @include('users.modal_boton_asignar') </span>
                   <h5> No se encuentra registrado como miembro en ninguna iglesia</h5>
                    
                 </div>
