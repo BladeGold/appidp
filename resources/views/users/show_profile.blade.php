@@ -46,6 +46,9 @@
                                 @can('Administrador')
                                     <div class="col-sm-3 float-left"> <a href="{{route('admin.edit', $user->id )}} "><button type="button" class="btn btn-block btn-warning btn-sm">Editar</button></a></div>
                                 @endcan
+                                @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro')
+                                <div class="col-sm-3 float-left"> <a href="{{route('users.edit', Auth::id() )}} "><button type="button" class="btn btn-block btn-warning btn-sm">Editar</button></a></div>
+                            @endcan
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

@@ -41,6 +41,15 @@ class UserController extends Controller
 
     public function index()
     {
+        if(empty(session('iglesia_id'))==true){
+            $us= User::with('Pertenece')->where('id', Auth::id())->first();
+            $iglesia_id=$us->Pertenece->pluck('id')->last();
+
+            if($iglesia_id !== null){
+                session(['iglesia_id' => $iglesia_id]);
+            } 
+        }
+
         $valida = $this->validates();
         switch ($valida){
             case true:

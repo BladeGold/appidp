@@ -1,4 +1,6 @@
-@extends('layouts.app')      
+@extends('layouts.app')
+@section('title') Inicio -@endsection
+
 @section('content')
 <div class="container">
     <section class="content">
@@ -37,7 +39,10 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
+                        @if(empty(session('iglesia_id'))==false)
+
                         <a href="{{route('iglesias.show', session('iglesia_id'))}}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        @endif 
                     </div>
                 </div>
                 <!-- ./col -->
@@ -45,14 +50,16 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $miembros_count }}</h3>
+                            <h3>{{ $miembros_count ?? 0}}</h3>
 
                             <p>Miembros registrado</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
+                        @if(empty(session('iglesia_id'))==false)
                         <a href="{{route('iglesias.show', session('iglesia_id'))}}" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                        @endif
                     </div>
                 </div>
                 <!-- ./col -->

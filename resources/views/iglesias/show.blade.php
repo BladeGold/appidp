@@ -16,7 +16,7 @@
                             <dt class="col-sm-4"><i class="fa fa-user-circle" aria-hidden="true"> </i>Pastor</dt>
                             <dd class="col-sm-8">
                                 @if(!empty($pastor))
-                               <p> <strong>{{ $pastor }} </strong> </p>
+                               <p> <strong>{{ $pastor->name }} {{$pastor->last_name}}</strong> </p>
                                @endif
 
                                @if(empty($pastor))

@@ -209,7 +209,7 @@
                             </li>
                         @endcan
                         @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro')
-                        @if(empty(session('iglesia_id')==false))
+                        @if(empty(session('iglesia_id'))==false)
                         <li class="nav-item">                            
                             <a  href="{{route('iglesias.show',session('iglesia_id'))}}" 
                                 
