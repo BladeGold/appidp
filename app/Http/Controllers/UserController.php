@@ -41,6 +41,15 @@ class UserController extends Controller
 
     public function index()
     {
+        if(empty(session('iglesia_id'))==true){
+            $us= User::with('Pertenece')->where('id', Auth::id())->first();
+            $iglesia_id=$us->Pertenece->pluck('id')->last();
+
+            if($iglesia_id !== null){
+                session(['iglesia_id' => $iglesia_id]);
+            } 
+        }
+
         $valida = $this->validates();
         switch ($valida){
             case true:
@@ -58,18 +67,12 @@ class UserController extends Controller
       $pastor=NULL;
       //obtieene la iglesia del usuario
       $iglesia=  User::find(Auth::id())->Pertenece->flatten()->pluck('name','id')->toArray();
-
-      foreach ($iglesia as $key => $value) {
-          
+      foreach ($iglesia as $key => $value) {          
             $data_iglesia = Iglesia::find($key)->Miembros->flatten()->pluck('name','id');
-
-                $miembros_count=$data_iglesia->count();                
-    
+                $miembros_count=$data_iglesia->count();
             foreach ($data_iglesia as $id => $name) {
                 $data_user = User::find($id)->tieneRol()->toArray();
-
-                foreach ($data_user as $rol_id => $rol) {
-                
+                foreach ($data_user as $rol_id => $rol) {             
                     do {
                         if($rol == 'Pastor'){
                             $pastor_name= $name;
@@ -82,14 +85,12 @@ class UserController extends Controller
             }
         }
         if (!empty($iglesia)) {
-            
             $esMiembro=true; 
-            
             return view('users.dashboard', compact('esMiembro','iglesia', 'pastor', 'miembros_count',));
         }
         else {
-         $esMiembro=false;
-         $iglesias = Iglesia::all()->flatten()->pluck('name', 'id'); 
+            $esMiembro=false;
+            $iglesias = Iglesia::all()->flatten()->pluck('name', 'id'); 
             return view('users.dashboard', compact('esMiembro', 'iglesias',));   
         }
 
@@ -110,7 +111,7 @@ class UserController extends Controller
 
 
     public function store(UserCreateFormRequest $request)
-    {
+    { 
         $valida = $this->validates();
         if ($valida==true){
             return redirect('/users');
@@ -177,6 +178,7 @@ class UserController extends Controller
 
     public function update(UserUpdateFormRequest $request, $id)
     {
+        
         $date = UserDate::where('user_id', $id)->firstOrFail();
         $user = User::findOrFail($id);
 
@@ -216,10 +218,11 @@ class UserController extends Controller
         //
     }
 
-    public function asignarIglesia(){
+    public function asignarIglesia(Request $request, $id){
         
-        User::findOrFail(Auth::id())->asignarIglesia($request->get('iglesia'));
-
+      
+       User::findOrFail($id)->asignarIglesia($request->get('iglesia'));
+          
         return redirect('users/dashboard');
     }
 

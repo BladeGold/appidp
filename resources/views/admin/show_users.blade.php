@@ -9,7 +9,6 @@
         <table class="table table-bordered display dt-responsive nowrap" id="data_table" style="width: auto" >
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col" >Email</th>
@@ -37,8 +36,8 @@
 
                 columns:[
 
-                    {data: "id",  className: 'dtr-control', defaultContent: '<ion-icon name="add-circle-outline"></ion-icon>'},
-                    {data: "name", name: 'name'},
+                    
+                    {data: "name", name: 'name',className: 'dtr-control', defaultContent: '<ion-icon name="add-circle-outline"></ion-icon>'},
                     {data: "last_name", name: 'last_name'},
                     {data: "email", name: 'email'},
                     {data: 'action', name: 'action', ordeable:false, searchable:false},

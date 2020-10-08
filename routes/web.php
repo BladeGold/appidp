@@ -27,7 +27,7 @@ Auth::routes();
 //RUTAS USERS
 Route::get('users/dashboard', 'UserController@dashboard')->name('users.dashboard
 	');
-Route::get('users/asignarIglesia', 'UserController@asignarIglesia')->name('users.asignarIglesia');
+Route::get('users/{iglesia}/asignarIglesia', 'UserController@asignarIglesia')->name('users.asignarIglesia');
 Route::resource('users', 'UserController');
 
 //RUTAS ADMIN

@@ -20,7 +20,7 @@
                                         </script>
                                     @endif
                                 @csrf
-                                    <div class="row">
+                                    <div class="row text-center">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div id="imagenPreview" >
