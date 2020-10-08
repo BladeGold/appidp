@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Inicio -@endsection
+
 
 @section('content')
 <div class="container">
