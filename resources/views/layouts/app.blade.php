@@ -208,10 +208,11 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('Usuario'||'Pastor'||'Tesorera'||'Maestro')
-                        <li class="nav-item">
-                            
-                            <a href="{{route('iglesias.show', session('iglesia_id'))}}"
+                        @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro')
+                        @if(empty(session('iglesia_id')==false))
+                        <li class="nav-item">                            
+                            <a  href="{{route('iglesias.show',session('iglesia_id'))}}" 
+                                
                                class="nav-link nav-link">
                                 <i class="nav-icon fa fa-church"></i>
                                 <p>
@@ -221,6 +222,7 @@
                                 </p>
                             </a>
                         </li>
+                        @endif
                         @endcan
 
                     </ul>
@@ -244,6 +246,7 @@
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Layout</a></li>
               <li class="breadcrumb-item active">Fixed Layout</li>
+              
             </ol>
           </div>
         </div>
@@ -257,6 +260,7 @@
         <div class="row">
           <div class="col-12">
             <!-- Default box -->
+            
             @include('mensaje')
             @yield('content')
             @include('script')
