@@ -44,7 +44,11 @@ class LoginController extends Controller
     {
         $user = User::with('roles')->where('id', $user->id)->first();
         $role= $user->roles->first()->name;
-        
+        $us= User::with('Pertenece')->where('id', $user->id)->first();
+        $iglesia_id=$us->Pertenece->pluck('id')->last();
+        if($iglesia_id !== null){
+        session(['iglesia_id' => $iglesia_id]);
+        }      
         if($role == 'Administrador'){
             return redirect()->route('admin.dashboard') ;
         }

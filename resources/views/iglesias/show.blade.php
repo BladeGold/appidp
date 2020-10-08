@@ -6,14 +6,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <ion-icon name="home"></ion-icon>
+                            <i class="nav-icon fa fa-church"></i>
                             Iglesia de Dios de la Profecía {{$iglesia->name}}
                         </h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-4">Pastor</dt>
+                            <dt class="col-sm-4"><i class="fa fa-user-circle" aria-hidden="true"> </i>Pastor</dt>
                             <dd class="col-sm-8">
                                 @if(!empty($pastor))
                                <p> <strong>{{ $pastor }} </strong> </p>
@@ -21,14 +21,16 @@
 
                                @if(empty($pastor))
                                <p><strong> Sin Asignar</strong></p>
+                               @can('Administrador')
                                @include('iglesias.modal_button_pastor')
+                               @endcan
                                @endif
                             </dd>
                             
                         </dl>
                         <hr>
                         <dl class="row">
-                            <dt class="col-sm-4">Dirección</dt>
+                            <dt class="col-sm-4"> <i class="fa fa-map" aria-hidden="true"> </i>Dirección</dt>
                             <dd class="col-sm-8">
                                <p> <strong>{{ $iglesia->direccion}} </strong> </p>
                             </dd>
@@ -36,7 +38,7 @@
                         </dl>
                         <hr>
                         <dl class="row">
-                            <dt class="col-sm-4">Miembros</dt>
+                            <dt class="col-sm-4"><i class="fa fa-users" aria-hidden="true"> </i>Miembros</dt>
                             <dd class="col-sm-8">
                                 @if($existe == true)
                                 <table class="table  table-bordered" id="data_table" style="width: auto" >
