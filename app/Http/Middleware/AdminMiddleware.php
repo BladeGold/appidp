@@ -18,7 +18,7 @@ class AdminMiddleware
     {   $rol = User::findOrFail($request->user()->id)->tieneRol();
 
          if( $rol[0] !== 'Administrador'){
-            return false . redirect('/users')->with('mensaje','No tienes permiso para ingresar a la ruta')->with('tipo','danger' );
+            return redirect('/users');
          }
 
         return $next($request);

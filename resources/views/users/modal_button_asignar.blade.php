@@ -1,6 +1,7 @@
 <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#addRole">Añadirme como miembro</button>
 
-<form method="POST" action="{{route('users.asignarIglesia')}}">
+<form method="POST" action="{{route('users.asignarIglesia',Auth::id)}}">
+   @method('PATCH')
     @csrf
 
     <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -16,8 +17,7 @@
                         @if ($errors->any())
                             @include('mensaje')
                         @endif
-                        <form method="POST" action="{{ route('iglesias.store') }}" role="form" >
-                            @csrf
+                        
                             <div class="row">
                                 <div class="col-sm-6">
                             <div class="form-group">
@@ -40,7 +40,7 @@
                         </div>
                             </div>
                             
-                        </form>
+                        
                     </div>
 
                 <div class="modal-footer">

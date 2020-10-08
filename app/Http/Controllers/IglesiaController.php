@@ -19,7 +19,7 @@ class IglesiaController extends Controller
      */
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('single_admin')->except('show');
+        $this->middleware('single_admin')->except('show','shows');
 
     }
     public function validates(){
@@ -106,35 +106,20 @@ class IglesiaController extends Controller
 
         if($rol[0] == 'Administrador') {
 
-            $pastor=NULL;
             $iglesia = Iglesia::findOrFail($id);
             $users = Iglesia::findOrFail($id)->Miembros;
             $us = $users->toArray();
-            $fil= $users->pluck('name','id');
-            foreach ($fil as $id => $name) {
-                $data_user = User::find($id)->tieneRol()->toArray();
-                foreach ($data_user as $rol_id => $rol) {
-                    do {
-                        if($rol == 'Pastor'){
-                            $pastor_name= $name;
-                            $pastor_lastname= User::where('id', $id)->pluck('last_name');
-                           $pastor= $pastor_name.' '.$pastor_lastname[0];
-                           break;
-                        }
-                    } while (0);
-                }
-            }
-    
+            $pastor=User::whereHas('Pertenece', function($query) use($id) {
+                $query->where('iglesia_id', $id);
+                })->whereHas('roles', function($query){
+                $query->where('name','Pastor');
+                })->get()->last();    
             if (empty($us)== true) {
                             $existe = false;
                         }            
             if (empty($us) == false) {
                 $existe= true;
             }
-            $usuarios = User::whereHas('roles', function($query){
-                $query->where('name', 'Pastor');
-            })->get()->toArray();
-
             $pastores= User::WhereDoesntHave('Pertenece')->whereHas('roles', function($query){
                 $query->where('name','Pastor');
             })->get()->toArray();
@@ -143,31 +128,24 @@ class IglesiaController extends Controller
         }
 
         elseif($rol[0] !== 'Administrador'){
-        $iglesia_id=User::findOrFail(Auth::id())->Pertenece->pluck('id')->toArray();
-            $iglesia= Iglesia::findOrFail($iglesia_id[0]);
-             $users= Iglesia::findOrFail($iglesia_id[0])->Miembros;
-             $fil= $users->pluck('name','id');
-            foreach ($fil as $id => $name) {
-                $data_user = User::find($id)->tieneRol()->toArray();
-                foreach ($data_user as $rol_id => $rol) {
-                    do {
-                        if($rol == 'Pastor'){
-                            $pastor_name= $name;
-                            $pastor_lastname= User::where('id', $id)->pluck('last_name');
-                           $pastor= $pastor_name.' '.$pastor_lastname[0];
-                           break;
-                        }
-                    } while (0);
-                }
+        $iglesia_id=User::findOrFail(Auth::id())->Pertenece->flatten()->pluck('id')->last();
+            $iglesia= Iglesia::findOrFail($iglesia_id);
+            $users= User::whereHas('Pertenece', function($query) use($iglesia_id) {
+                $query->where('iglesia_id', $iglesia_id);
+                })->get();
+            $pastor=User::whereHas('Pertenece', function($query) use($iglesia_id) {
+                $query->where('iglesia_id', $iglesia_id);
+                })->whereHas('roles', function($query){
+                $query->where('name','Pastor');
+                })->get()->last();
+            
+            if (empty($users)== true) {
+                $existe = false;
+            }            
+            if (empty($users) == false) {
+                    $existe= true;
             }
-    
-            if (empty($us)== true) {
-                            $existe = false;
-                        }            
-            if (empty($us) == false) {
-                $existe= true;
-            }
-
+            
            return view('iglesias.show', compact('users', 'iglesia', 'pastor','existe',));
         }
 

@@ -41,6 +41,15 @@ class UserController extends Controller
 
     public function index()
     {
+        if(empty(session('iglesia_id'))==true){
+            $us= User::with('Pertenece')->where('id', Auth::id())->first();
+            $iglesia_id=$us->Pertenece->pluck('id')->last();
+
+            if($iglesia_id !== null){
+                session(['iglesia_id' => $iglesia_id]);
+            } 
+        }
+
         $valida = $this->validates();
         switch ($valida){
             case true:
@@ -58,18 +67,12 @@ class UserController extends Controller
       $pastor=NULL;
       //obtieene la iglesia del usuario
       $iglesia=  User::find(Auth::id())->Pertenece->flatten()->pluck('name','id')->toArray();
-
-      foreach ($iglesia as $key => $value) {
-          
+      foreach ($iglesia as $key => $value) {          
             $data_iglesia = Iglesia::find($key)->Miembros->flatten()->pluck('name','id');
-
-                $miembros_count=$data_iglesia->count();                
-    
+                $miembros_count=$data_iglesia->count();
             foreach ($data_iglesia as $id => $name) {
                 $data_user = User::find($id)->tieneRol()->toArray();
-
-                foreach ($data_user as $rol_id => $rol) {
-                
+                foreach ($data_user as $rol_id => $rol) {             
                     do {
                         if($rol == 'Pastor'){
                             $pastor_name= $name;
@@ -82,19 +85,13 @@ class UserController extends Controller
             }
         }
         if (!empty($iglesia)) {
-            
             $esMiembro=true; 
-            
-            return view('users.dashboard', ['esMiembro' => $esMiembro,
-        'iglesia' => $iglesia,
-        'pastor' => $pastor,
-        'miembros_count' => $miembros_count,]);
+            return view('users.dashboard', compact('esMiembro','iglesia', 'pastor', 'miembros_count',));
         }
         else {
-         $esMiembro=false;
-         $iglesias = Iglesia::all()->flatten()->pluck('name', 'id'); 
-            return view('users.dashboard', ['esMiembro' => $esMiembro, 
-                'iglesias' => $iglesias]);   
+            $esMiembro=false;
+            $iglesias = Iglesia::all()->flatten()->pluck('name', 'id'); 
+            return view('users.dashboard', compact('esMiembro', 'iglesias',));   
         }
 
     }
@@ -103,16 +100,18 @@ class UserController extends Controller
     {
         if(empty(User::findOrFail(Auth::id())->Pertenece->toArray())){
             $iglesias = Iglesia::all()->flatten()->pluck('name', 'id');
-            return view('users.regdate', compact('iglesias'));
+            $esMiembro= false;
+            return view('users.regdate', compact('iglesias','esMiembro'));
           }
         else{
-            return view('users.regdate');
+            $esMiembro= true;
+            return view('users.regdate',compact('esMiembro'));
         }
     }
 
 
     public function store(UserCreateFormRequest $request)
-    {
+    { 
         $valida = $this->validates();
         if ($valida==true){
             return redirect('/users');
@@ -148,8 +147,11 @@ class UserController extends Controller
 
     public function show($id)
     { $valida = $this->validates();
+        $user_date=UserDate::Where('user_id', $id)->firstOrFail();
+        $user=User::findOrFail($id);
+        $rol= User::find($id)->roles->flatten()->pluck('name')->last();
         if ($valida==true){
-            return view('users.show_profile', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            return view('users.show_profile', compact('user_date','user','rol',));
         }
         else {
             return redirect('/users');
@@ -168,19 +170,22 @@ class UserController extends Controller
         }
 
         else{
-            return view('users.edit', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            $user_date = UserDate::Where('user_id', $id)->firstOrFail();
+            $user = User::findOrFail($id);
+            return view('users.edit', compact('user_date', 'user',));
         }
     }
 
     public function update(UserUpdateFormRequest $request, $id)
     {
+        
         $date = UserDate::where('user_id', $id)->firstOrFail();
         $user = User::findOrFail($id);
 
         $user->name=$request->get('name');
         $user->last_name=$request->get('last_name');
 
-        $date->user_id= Auth::id();
+        
         $date->fecha_nacimiento=$request->get('fecha_nacimiento');
         $date->lugar_nacimiento=$request->get('lugar_nacimiento');
         $date->telefono=$request->get('telefono');
@@ -213,10 +218,11 @@ class UserController extends Controller
         //
     }
 
-    public function asignarIglesia(){
+    public function asignarIglesia(Request $request, $id){
         
-        User::findOrFail(Auth::id())->asignarIglesia($request->get('iglesia'));
-
+      
+       User::findOrFail($id)->asignarIglesia($request->get('iglesia'));
+          
         return redirect('users/dashboard');
     }
 

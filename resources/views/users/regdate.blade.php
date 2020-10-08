@@ -95,7 +95,8 @@
                                 </select>
                             </div>
                         </div>
-
+                        @if ($esMiembro==false)
+                            
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="chec">Desea Registrar la iglesia a la que pertenece?</label>
@@ -117,6 +118,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <br>
                     <div class="row">
