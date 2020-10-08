@@ -38,7 +38,7 @@
     <!--<link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">-->
     <script src="https://kit.fontawesome.com/ada267d788.js" crossorigin="anonymous"></script>
     <!-- Fonts Online-->
-    <link href="{{asset('dist/css/font.min.css')}}"
+    <link href="{{asset('dist/css/font.min.css')}}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!--<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
 
@@ -62,10 +62,9 @@
 
 </head>
 
-<body class="hold-transition sidebar-collapse layout-top-nav">
+<body class="hold-transition sidebar-collapse ">
 <div class="wrapper">
     <!-- Navbar -->
-
         <nav class="main-header navbar navbar-expand-md navbar-light " style="background: linear-gradient(135deg, rgba(73,155,234,1) 0%, rgba(73,155,234,1) 13%, rgba(25,105,179,1) 37%, rgba(224,20,20,1) 100%);">
 
                 <a class="navbar-toggler order-1 " type="button" data-toggle="collapse" @auth() data-widget="pushmenu" @endauth data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,8 +75,6 @@
                          style="opacity: .8">
                     <span class="brand-text font-weight-light text-white">{{ config('app.name') }}</span>
                 </a>
-
-
                 <div class="collapse navbar-collapse order-3" @auth() id=""@endauth  @guest() id="navbarCollapse" @endguest>
                     <!-- Left navbar links -->
                     <ul class="navbar-nav align-content-center">
@@ -87,22 +84,17 @@
                             </li>
                        @endauth
                           @guest()
-
                                <li class="nav-item" >
                                    <a href="{{url('/')}}" class="nav-link  text-white border elevation-2" style="border-radius: 10px">Inicio</a>
                                </li>
                                <li class="p-1">
-
                                </li>
                                <li class="nav-item ">
                                    <a href="#" class="nav-link  text-white border elevation-2 "  style="border-radius: 10px;">Contacto</a>
                                </li>
                           @endguest
-
                     </ul>
-
                     <!-- SEARCH FORM -->
-
                 </div>
 
                 <!-- Right navbar links -->
@@ -139,13 +131,13 @@
         </nav>
 
         <!-- /.navbar -->
-@auth()
+    @auth()
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
             <!-- Brand Logo -->
             <a href="{{ url('/') }}" class="brand-link">
             <img src="{{ asset('dist/img/logo1.png') }}"
-                 alt="AdminLTE Logo"
+                 alt="logo1.png"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <p style="font-size: x-small"><span class="font-weight-light">{{ config('app.name')}}</span></p>
@@ -169,10 +161,8 @@
                                 @csrf
                             </form>
                         </a>
-
                     </div>
                 </div>
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -218,43 +208,77 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro')
+                        @if(empty(session('iglesia_id')==false))
+                        <li class="nav-item">                            
+                            <a  href="{{route('iglesias.show',session('iglesia_id'))}}" 
+                                
+                               class="nav-link nav-link">
+                                <i class="nav-icon fa fa-church"></i>
+                                <p>
+                                    Mi Iglesia
+                                    
+                                   
+                                </p>
+                            </a>
+                        </li>
+                        @endif
+                        @endcan
 
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
-        </aside>
+        </aside>        
     @endauth
-
-
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container">
-            </div><!-- /.container-fluid -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+    
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Layout</a></li>
+              <li class="breadcrumb-item active">Fixed Layout</li>
+              
+            </ol>
+          </div>
         </div>
-        <!-- /.content-header -->
+      </div><!-- /.container-fluid -->
+    </section>
 
-        <!-- Main content -->
-        <div class="content">
-            <div class="container">
-                <div class="row">
+    <!-- Main content -->
+    <section class="content">
 
-                    @include('mensaje')
-                    @yield('content')
-                    @include('script')
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            
+            @include('mensaje')
+            @yield('content')
+            @include('script')
+            <!-- /.card -->
+          </div>
         </div>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
+    
+
+      
+              
+           
+
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -270,6 +294,15 @@
 
 <!-- REQUIRED SCRIPTS -->
 
+
+<!-- Bootstrap 4 -->
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('dist/js/demo.js')}}"></script>
 
 </body>
 </html>

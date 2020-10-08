@@ -85,16 +85,12 @@ class UserController extends Controller
             
             $esMiembro=true; 
             
-            return view('users.dashboard', ['esMiembro' => $esMiembro,
-        'iglesia' => $iglesia,
-        'pastor' => $pastor,
-        'miembros_count' => $miembros_count,]);
+            return view('users.dashboard', compact('esMiembro','iglesia', 'pastor', 'miembros_count',));
         }
         else {
          $esMiembro=false;
          $iglesias = Iglesia::all()->flatten()->pluck('name', 'id'); 
-            return view('users.dashboard', ['esMiembro' => $esMiembro, 
-                'iglesias' => $iglesias]);   
+            return view('users.dashboard', compact('esMiembro', 'iglesias',));   
         }
 
     }
@@ -103,10 +99,12 @@ class UserController extends Controller
     {
         if(empty(User::findOrFail(Auth::id())->Pertenece->toArray())){
             $iglesias = Iglesia::all()->flatten()->pluck('name', 'id');
-            return view('users.regdate', compact('iglesias'));
+            $esMiembro= false;
+            return view('users.regdate', compact('iglesias','esMiembro'));
           }
         else{
-            return view('users.regdate');
+            $esMiembro= true;
+            return view('users.regdate',compact('esMiembro'));
         }
     }
 
@@ -171,7 +169,9 @@ class UserController extends Controller
         }
 
         else{
-            return view('users.edit', ['user_date' => UserDate::Where('user_id', $id)->firstOrFail() , 'user'=>User::findOrFail($id)]);
+            $user_date = UserDate::Where('user_id', $id)->firstOrFail();
+            $user = User::findOrFail($id);
+            return view('users.edit', compact('user_date', 'user',));
         }
     }
 

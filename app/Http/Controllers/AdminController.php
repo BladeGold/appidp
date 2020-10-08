@@ -28,14 +28,11 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {   
-        $ig= DB::table('iglesia_user')->count();
-        
-        
-        return view('admin.index', [
-            'users_count' => User::all()->count(),
-            'iglesias_count' => Iglesia::all()->count(), 
-            'miembros_registrados' => $ig,  
-        ]);
+        $miembros_registrados= DB::table('iglesia_user')->count();
+        $users_count = User::all()->count();
+        $iglesias_count = Iglesia::all()->count(); 
+                
+        return view('admin.index', compact('users_count','iglesias_count','miembros_registrados') );
     }
 
     /**
@@ -67,11 +64,12 @@ class AdminController extends Controller
      */
     public function show($id)
     {  $valida = $this->validates($id);
-        $user_date=UserDate::Where('user_id', $id)->firstOrFail();
-        $user=User::findOrFail($id);
-        $rol= User::find($id)->roles->flatten()->pluck('name')->last();
+       
 
         if ($valida==true){
+            $user_date=UserDate::Where('user_id', $id)->firstOrFail();
+            $user=User::findOrFail($id);
+            $rol= User::find($id)->roles->flatten()->pluck('name')->last();
             return view('admin.show_profile', compact('user_date','user','rol'));
         }
         elseif ($valida==false) {

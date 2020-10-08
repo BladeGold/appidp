@@ -37,13 +37,13 @@
                     serverSide: true,
                     ajax: "{{route('iglesias.index')}}",
                     columnDefs: [
-                        {title: 'ID', targets: 0,  },
-                        {title: "Nombre de Iglesia", targets: 1},
-                        {title: "Opciones", targets: 2},
+                        
+                        {title: "Nombre de Iglesia", targets: 0},
+                        {title: "Opciones", targets: 1},
                     ],
 
                     columns: [
-                        {data: "id", name: 'id',},
+                        
                         {data: "name", name: 'name',  },
                         {data: 'action', name: 'action',  ordeable: false, searchable: false},
 
