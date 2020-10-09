@@ -161,8 +161,20 @@ class IglesiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   $iglesia= Iglesia::findOrFail($id);
+
+        $pastor=User::whereHas('Pertenece', function($query) use($id) {
+            $query->where('iglesia_id', $id);
+            })->whereHas('roles', function($query){
+            $query->where('name','Pastor');
+            })->get()->last();
+            
+        $pastores= User::WhereDoesntHave('Pertenece')->whereHas('roles', function($query){
+                $query->where('name','Pastor');
+            })->get()->toArray();
+
+        
+        return view('iglesias.edit', compact('iglesia','pastores', 'pastor'));
     }
 
     /**
@@ -174,7 +186,42 @@ class IglesiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+     $iglesia=Iglesia::findOrFail($id);
+      
+
+     if(($request->get('name') == $iglesia->name) && ($request->get('direccion')!=$iglesia->direccion)){    
+
+         $request->validate([
+            'direccion' => 'required|unique:iglesias|min:10|max:255',
+            ]);
+        $iglesia->direccion=$request->get('direccion');
+     
+    }
+     if( ($request->get('name') != $iglesia->name) && ($request->get('direccion') == $iglesia->direccion) ){
+        $request->validate([
+            'name' => 'required|unique:iglesias|min:5|max:255|alpha',
+            ]);
+        $iglesia->name=$request->get('name');
+     }
+
+     if( ($request->get('name') != $iglesia->name) && ($request->get('direccion') != $iglesia->direccion) ){
+        dd('aca 3');
+        $iglesia->name=$request->get('name');
+        $iglesia->direccion=$request->get('direccion');
+    
+     }
+
+     
+     
+     if($request->get('pastor')!==NULL){
+         
+     $iglesia->asignarIglesia($request->get('pastor'));
+     }
+
+     $iglesia->update();
+
+     return redirect('iglesias/'.$id.'/edit');
+
     }
 
     /**

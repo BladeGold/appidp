@@ -151,6 +151,7 @@ return [
         'password' => 'contraseña',
         'name' => 'nombres',
         'last_name' => 'apellidos',
+        'name_iglesia' => 'nombre de iglesia'
     ],
 
 ];

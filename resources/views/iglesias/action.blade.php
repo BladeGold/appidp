@@ -2,9 +2,7 @@
     <a href="{{ route('iglesias.show', $id) }}">
         <button type="button" class="btn btn-secondary btn-sm"><i class="far fa-eye"></i></button>
     </a>
-    @can('Administrador')
-        
-    
+    @can('Administrador')   
     <a href="{{ route('iglesias.edit', $id) }}">
         <button type="button" class="btn btn-primary btn-sm"><i class="far fa-edit"></i></button>
     </a>
