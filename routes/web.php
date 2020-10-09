@@ -45,4 +45,7 @@ Route::post('iglesias/asignarPastor/{pastor}', 'IglesiaController@asignarPastor'
 Route::get('iglesias/shows/{id}', 'IglesiaController@shows')->name('iglesias.shows');
 Route::resource('iglesias', 'IglesiaController');
 
+//RUTAS FINANZAS
+Route::resource('finanzas', 'FinanzaController');
+
 

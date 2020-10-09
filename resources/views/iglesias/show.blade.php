@@ -13,7 +13,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-4"><i class="fa fa-user-circle" aria-hidden="true"> </i>Pastor</dt>
+                            <dt class="col-sm-4" style="border-right: 1px solid gray"><i class="fa fa-user-circle" aria-hidden="true"> &nbsp; </i>Pastor</dt>
                             <dd class="col-sm-8">
                                 @if(!empty($pastor))
                                <p> <strong>{{ $pastor->name }} {{$pastor->last_name}}</strong> </p>
@@ -30,7 +30,7 @@
                         </dl>
                         <hr>
                         <dl class="row">
-                            <dt class="col-sm-4"> <i class="fa fa-map" aria-hidden="true"> </i>Dirección</dt>
+                            <dt class="col-sm-4" style="border-right: 1px solid gray"> <i class="fa fa-map" aria-hidden="true"> &nbsp; </i>Dirección</dt>
                             <dd class="col-sm-8">
                                <p> <strong>{{ $iglesia->direccion}} </strong> </p>
                             </dd>
@@ -38,7 +38,7 @@
                         </dl>
                         <hr>
                         <dl class="row">
-                            <dt class="col-sm-4"><i class="fa fa-users" aria-hidden="true"> </i>Miembros</dt>
+                            <dt class="col-sm-4" style="border-right: 1px solid gray"><i class="fa fa-users" aria-hidden="true"> &nbsp; </i>Miembros</dt>
                             <dd class="col-sm-8">
                                 @if($existe == true)
                                 <table class="table  table-bordered" id="data_table" style="width: auto" >
