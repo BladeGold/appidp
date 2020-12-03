@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Finanza extends Model
+class FinanzaPasivo extends Model
 {
 
     protected $primaryKey = 'id';

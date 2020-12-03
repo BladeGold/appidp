@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Finanza;
+use App\FinanzaActivo;
+use App\FinanzaPasivo;
 
 
 class FinanzaController extends Controller
@@ -14,14 +15,14 @@ class FinanzaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-        $this->middleware('auth');
-        //  $this->middleware('single_admin')->except('show','shows');
+       $this->middleware('auth');
+    $this->middleware('single_admin')->except('create','show');
 
     }
     
      public function index()
     {   $this->middleware('single_admin');
-        $epa=Finanza::all();
+       
         
         
         return view('finanzas.index');
@@ -34,7 +35,7 @@ class FinanzaController extends Controller
      */
     public function create()
     {
-        //
+        return view('finanzas.create');
     }
 
     /**
