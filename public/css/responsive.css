@@ -509,3 +509,10 @@ padding: 7px 15px;
     }
 }
  
+@media (min-width: 320px) and (max-width: 580px) {
+.img-auto{
+    width: 20%;
+    height: 10%;
+}
+
+}

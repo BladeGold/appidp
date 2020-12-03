@@ -68,20 +68,22 @@
         </div>
     </div>
     <!-- End Banner -->
-    
+    <div class="section">
+        <hr color="gray" size="10" width="88%">
+    </div
 	<!-- section -->
     <div class="section">
         <div class="container">
-            <div class="row">
+            <div class="row" style="background-image: url('img/banners/banner_fondo.png'); background-size: cover; box-shadow:10px -10px #e90808ce">
                 <div class="col-md-6">
                     <div class="full text_align_center_img" style="margin-top: 150px">
-                        <img src="img/logo iglesia.png" alt="#"  height="450px" />
+                        <img src="img/logo iglesia.png" alt="#"  height="450px" class=""/>
                     </div>
                 </div>
-                <div class="col-md-6 layout_padding">
+                <div class="col-md-6 layout_padding" >
                     <div class="full paddding_left_15">
                         <div class="heading_main text_align_left" style="margin-top: 150px;">
-						   <h2 style="font-size:60px"><span class="theme_color">Bienvenido</span> a {{ config('app.name') }}</h2>	
+						   <h2 style="font-size:60px"><span class="theme_color">Bienvenido</span> a     {{ config('app.name') }}</h2>	
                         </div>
                     </div>
                   
