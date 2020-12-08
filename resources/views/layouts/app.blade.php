@@ -196,7 +196,7 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item"> 
                                 <a href="{{route('iglesias.index')}}"
                                    class="nav-link nav-link">
                                     <i class="nav-icon fa fa-church"></i>
@@ -207,22 +207,47 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('finanzas.index')}}"
+                                   class="nav-link nav-link">
+                                    <i class="nav-icon fa fa-hand-holding-usd"></i>
+                                    <p>
+                                        Finanzas
+                                        
+                                    </p>
+                                </a>
+                            </li>
                         @endcan
-                        @can('Usuario' || 'Pastor' || 'Tesorera' || 'Maestro')
+                        @cannot('Administrador')
                         @if(empty(session('iglesia_id'))==false)
-                        <li class="nav-item">                            
-                            <a  href="{{route('iglesias.show',session('iglesia_id'))}}" 
-                                
-                               class="nav-link nav-link">
+                        <li class="nav-item has-treeviem"> 
+                            <!--  -->                           
+                            <a  href="" class="nav-link ">
                                 <i class="nav-icon fa fa-church"></i>
                                 <p>
                                     Mi Iglesia
+                                    <i class="fas fa-angle-left right"></i>
                                     
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                  <a href="{{route('iglesias.show',session('iglesia_id'))}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ver Datos</p>
+                                  </a>
+                                </li>
+                                @can('Pastor'||'Tesorera')
+                                <li class="nav-item">
+                                  <a href="{{route('finanzas.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ingresar Finanza</p>
+                                  </a>
+                                </li>
+                                @endcan
                         </li>
                         @endif
-                        @endcan
+                        @endcannot
 
                     </ul>
                 </nav>

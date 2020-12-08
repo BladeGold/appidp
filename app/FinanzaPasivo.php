@@ -8,4 +8,5 @@ class FinanzaPasivo extends Model
 {
 
     protected $primaryKey = 'id';
+    protected $table= 'finanza_pasivo';
 }

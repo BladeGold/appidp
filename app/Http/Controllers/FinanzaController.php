@@ -15,13 +15,13 @@ class FinanzaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-       $this->middleware('auth');
-    $this->middleware('single_admin')->except('create','show');
+    $this->middleware('auth');
+    $this->middleware('single_admin')->except('create','show','store');
 
     }
     
      public function index()
-    {   $this->middleware('single_admin');
+    { 
        
         
         
@@ -45,8 +45,43 @@ class FinanzaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {       
+        switch ($request->get('select_finanza')) {
+            case 'activo':
+                $finanza = new FinanzaActivo();
+
+                $finanza->iglesia_id=$request->get('iglesia_id');
+                $finanza->monto=$request->get('monto_activo');
+                $finanza->fecha=$request->get('fecha_activo');
+
+                $finanza->save();
+                break;
+            
+            case 'pasivo':
+                $finanza = new FinanzaPasivo();
+
+                $finanza->iglesia_id=$request->get('iglesia_id');
+                $finanza->monto=$request->get('monto_pasivo');
+                $finanza->fecha=$request->get('fecha_pasivo');
+
+                $finanza->save();
+                break;
+
+            case 'ambos':
+                $finanza_activo = new FinanzaActivo();
+                $finanza_activo->iglesia_id=$request->get('iglesia_id');
+                $finanza_activo->monto=$request->get('monto_activo');
+                $finanza_activo->fecha=$request->get('fecha_activo');
+                $finanza_activo->save();
+
+                $finanza_pasivo = new FinanzaPasivo();
+                $finanza_pasivo->iglesia_id=$request->get('iglesia_id');
+                $finanza_pasivo->monto=$request->get('monto_pasivo');
+                $finanza_pasivo->fecha=$request->get('fecha_pasivo');
+                $finanza_pasivo->save();
+                break;
+        }
+        
     }
 
     /**
