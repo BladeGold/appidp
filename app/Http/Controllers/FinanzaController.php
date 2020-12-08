@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\FinanzaActivo;
 use App\FinanzaPasivo;
+use App\Iglesia;
 
 
 class FinanzaController extends Controller
@@ -55,6 +56,8 @@ class FinanzaController extends Controller
                 $finanza->fecha=$request->get('fecha_activo');
 
                 $finanza->save();
+
+                return  redirect('finanzas/',session('iglesia_id'));
                 break;
             
             case 'pasivo':
@@ -65,6 +68,7 @@ class FinanzaController extends Controller
                 $finanza->fecha=$request->get('fecha_pasivo');
 
                 $finanza->save();
+                return  redirect('finanzas/'.session('iglesia_id'));
                 break;
 
             case 'ambos':
@@ -79,6 +83,8 @@ class FinanzaController extends Controller
                 $finanza_pasivo->monto=$request->get('monto_pasivo');
                 $finanza_pasivo->fecha=$request->get('fecha_pasivo');
                 $finanza_pasivo->save();
+
+                return  redirect('finanzas/'.session('iglesia_id'));
                 break;
         }
         
@@ -90,9 +96,21 @@ class FinanzaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $iglesia= Iglesia::findOrFail($id);
+
+        if ($request->ajax()){
+            $finanza_activo=FinanzaActivo::where('iglesia_id',$id);
+
+            return DataTables::of($finanza_activo)
+
+                ->addColumn('action', 'iglesias.action')
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('finanzas.show',compact('iglesia'));
     }
 
     /**

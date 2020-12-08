@@ -244,6 +244,12 @@
                                     <p>Ingresar Finanza</p>
                                   </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{route('finanzas.show',session('iglesia_id'))}}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>Ver Registro Financiero</p>
+                                    </a>
+                                  </li>
                                 @endcan
                         </li>
                         @endif
